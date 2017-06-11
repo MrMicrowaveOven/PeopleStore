@@ -13,12 +13,15 @@ class PeopleController < ApplicationController
         return
       end
     else
-      if params.keys.length > 3
-        render json: {error: "Are you trying to find numbers for a specific person?  If so, please include a `name:` parameter in your request."}
-      else
-        render json: Person.all
-        return
-      end
+      people = Person.all
+      full_get = {
+        people: people,
+        instructions:
+        "Are you trying to find numbers for a specific person?
+        If so, please include a `name:` parameter in your request.",
+      }
+      render json: full_get
+      return
     end
   end
 
