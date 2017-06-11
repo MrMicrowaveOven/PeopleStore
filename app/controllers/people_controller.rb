@@ -14,8 +14,17 @@ class PeopleController < ApplicationController
       end
     else
       people = Person.all
+      skinny_people = []
+      people.each do |person|
+        skinny_people.push({
+          name: person.name,
+          numbers: person.numbers.split,
+          created_at: person.created_at,
+          updated_at: person.updated_at
+        })
+      end
       full_get = {
-        people: people,
+        people: skinny_people,
         instructions:
         "Are you trying to find numbers for a specific person?
         If so, please include a `name:` parameter in your request.",
