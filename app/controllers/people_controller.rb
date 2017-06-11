@@ -13,8 +13,12 @@ class PeopleController < ApplicationController
         return
       end
     else
-      render json: Person.all
-      return
+      if params.keys.length > 3
+        render json: {error: "Are you trying to find numbers for a specific person?  If so, please include a `name:` parameter in your request."}
+      else
+        render json: Person.all
+        return
+      end
     end
   end
 
@@ -22,9 +26,11 @@ class PeopleController < ApplicationController
     @person = Person.create_slash_update(person_params)
     if @person.save
       number_array = @person[:numbers].split
-      render json: number_array
+      name = person_params[:name]
+      possessive_name = name.chars.last == "s" ? name + "'" : name + "'s"
+      render json: {"#{possessive_name} numbers": number_array}
     else
-      render json: {error: "post"}
+      render json: {error: "Please include both `name:` and `numbers:` parameters when posting."}
     end
   end
 
@@ -34,7 +40,7 @@ class PeopleController < ApplicationController
       if @person
         if params[:wantToDelete] == "yes"
           @person.destroy
-          render json: {person: "#{params[:name]} has been desroyed"}
+          render json: {person: "#{params[:name]} has been destroyed"}
           return
         else
           render json: {error: "In order to delete #{params[:name]}, you must include a `wantToDelete: 'yes'` parameter."}
