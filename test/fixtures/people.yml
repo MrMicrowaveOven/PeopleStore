@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  numbers: MyString
+  wantToDelete: MyString
+  yesIReallyWantToDeleteAll: MyString
+
+two:
+  name: MyString
+  numbers: MyString
+  wantToDelete: MyString
+  yesIReallyWantToDeleteAll: MyString
